@@ -43,13 +43,13 @@
                                             <div class="form-group mb-3">
                                                 <label for="name" class="form-label">Name</label>
                                                 <x-text-input id="name" class="form-control block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-                                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group mb-3">
                                                 <label for="email" class="form-label">Email address</label>
                                                 <x-text-input id="email" class="form-control block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group mb-3">
@@ -58,7 +58,7 @@
                                                     type="password"
                                                     name="password"
                                                     required autocomplete="current-password" />
-                                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group mb-3">
@@ -67,7 +67,7 @@
                                                     type="password"
                                                     name="password_confirmation"
                                                     required autocomplete="new-password" />
-                                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group mb-0 row">

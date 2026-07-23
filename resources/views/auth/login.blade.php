@@ -39,10 +39,21 @@
                                         <x-auth-session-status class="mb-4" :status="session('status')" />
                                         <form action="{{ route('login') }}" method="POST" class="my-4">
                                             @csrf
+
+                                            @if($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
                                             <div class="form-group mb-3">
                                                 <label for="email" class="form-label">Email address</label>
                                                 <x-text-input id="email" class="form-control block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group mb-3">
@@ -51,7 +62,7 @@
                                                     type="password"
                                                     name="password"
                                                     required autocomplete="current-password" />
-                                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                                <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group d-flex mb-3">
