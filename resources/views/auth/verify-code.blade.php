@@ -36,8 +36,8 @@
                                     </div>
 
                                     <div class="pt-0">
-                                        <x-auth-session-status class="mb-4" :status="session('status')" />
-                                        <form action="{{ route('admin.login') }}" method="POST" class="my-4">
+                                        <x-auth-session-status class="mb-4 alert alert-success" :status="session('status')" />
+                                        <form action="{{ route('custom.verification.code.login') }}" method="POST" class="my-4">
                                             @csrf
 
                                             @if($errors->any())
@@ -51,33 +51,16 @@
                                             @endif
 
                                             <div class="form-group mb-3">
-                                                <label for="email" class="form-label">Email address</label>
-                                                <x-text-input id="email" class="form-control block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
-                                            </div>
-
-                                            <div class="form-group mb-3">
-                                                <x-input-label for="password" :value="__('Password')" class="form-label" />
-                                                <x-text-input id="password" class="form-control block mt-1 w-full"
-                                                    type="password"
-                                                    name="password"
-                                                    required autocomplete="current-password" />
-                                                <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
-                                            </div>
-
-                                            <div class="form-group d-flex mb-3">
-                                                <div class="col-sm-6 text-end">
-                                                    @if (Route::has('password.request'))
-                                                    <a class='underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 fs-14' href='{{ route('password.request') }}'>Forgot password?</a>
-                                                    @endif
-                                                </div>
+                                                <label for="verification_code" class="form-label">Verification Code</label>
+                                                <x-text-input id="verification_code" class="form-control block mt-1 w-full" type="text" name="verification_code" :value="old('verification_code')" required autofocus autocomplete="verify code" />
+                                                <x-input-error :messages="$errors->get('verification_code')" class="mt-2 text-danger" />
                                             </div>
 
                                             <div class="form-group mb-0 row">
                                                 <div class="col-12">
                                                     <div class="d-grid">
                                                         <x-primary-button class="btn btn-primary">
-                                                            {{ __('Log in') }}
+                                                            {{ __('Verify') }}
                                                         </x-primary-button>
                                                     </div>
                                                 </div>

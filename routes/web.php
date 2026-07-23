@@ -20,4 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('/admin/verification-code', [AdminController::class, 'verificationCode'])->name('custom.verification.code');
+Route::post('/admin/verification-code', [AdminController::class, 'verificationCodeLogin'])->name('custom.verification.code.login');
+Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
 require __DIR__.'/auth.php';
