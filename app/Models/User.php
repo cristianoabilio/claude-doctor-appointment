@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
+#[Fillable(['name', 'email', 'password', 'google2fa_secret', 'google2fa_enabled'])]
+#[Hidden(['password', 'remember_token', 'google2fa_secret'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -27,6 +28,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            //'google2fa_enabled' => 'boolean'
         ];
+    }
+
+    /**
+     * Criptografa a chave secreta ao salvar no banco.
+     */
+    public function setGoogle2faSecretAttribute($value)
+    {
+        $this->attributes['google2fa_secret'] = $value ? Crypt::encryptString($value) : null;
+    }
+
+    /**
+     * Descriptografa a chave secreta ao recuperar do banco.
+     */
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return $value ? Crypt::decryptString($value) : null;
     }
 }

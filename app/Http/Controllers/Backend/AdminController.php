@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
+    public function index()
+    {
+        return view('admin.index');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -18,15 +23,13 @@ class AdminController extends Controller
             // Authentication passed...
 
             $user = Auth::user();
-            $verificationCode = random_int(100000, 999999); // Generate a random 6-digit code
+            // $verificationCode = random_int(100000, 999999); // Generate a random 6-digit code
 
-            session(['verification_code' => $verificationCode, 'user_id' => $user->id]);
+            // session(['verification_code' => $verificationCode, 'user_id' => $user->id]);
 
-            Mail::to($user->email)->send(new VerificationCodeEmail($verificationCode));
+            // Mail::to($user->email)->send(new VerificationCodeEmail($verificationCode));
 
-            Auth::logout();
-
-            return redirect()->route('custom.verification.code')
+            return redirect()->route('google2fa.code')
                 ->with('status', 'Verification Code sent to you email.');
         }
 
@@ -45,10 +48,10 @@ class AdminController extends Controller
         if ((int) $request->verification_code === session('verification_code')) {
             Auth::loginUsingId(session('user_id'));
 
-            session()->forget([
-                'verification_code',
-                'user_id'
-            ]);
+                session()->forget([
+                    'verification_code',
+                    'user_id'
+                ]);
 
             return redirect()->intended('/dashboard');
         }
@@ -56,11 +59,12 @@ class AdminController extends Controller
         return back()->withErrors(['code' => 'Invalid Verification Code.']);
     }
 
-
-
     public function logout(Request $request)
     {
         Auth()->logout();
+
+        $google2fa = app('pragmarx.google2fa');
+        $google2fa->logout();
 
         $request->session()->invalidate();
 
