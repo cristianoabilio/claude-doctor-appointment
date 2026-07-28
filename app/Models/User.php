@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
 
-#[Fillable(['name', 'email', 'password', 'google2fa_secret', 'google2fa_enabled'])]
+#[Fillable(['name', 'email', 'phone', 'photo', 'password', 'google2fa_secret', 'google2fa_enabled'])]
 #[Hidden(['password', 'remember_token', 'google2fa_secret'])]
 class User extends Authenticatable
 {

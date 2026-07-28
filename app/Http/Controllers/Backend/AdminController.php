@@ -20,14 +20,12 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-
             $user = Auth::user();
-            // $verificationCode = random_int(100000, 999999); // Generate a random 6-digit code
+            $verificationCode = random_int(100000, 999999); // Generate a random 6-digit code
 
-            // session(['verification_code' => $verificationCode, 'user_id' => $user->id]);
+            session(['verification_code' => $verificationCode, 'user_id' => $user->id]);
 
-            // Mail::to($user->email)->send(new VerificationCodeEmail($verificationCode));
+            Mail::to($user->email)->send(new VerificationCodeEmail($verificationCode));
 
             return redirect()->route('google2fa.code')
                 ->with('status', 'Verification Code sent to you email.');
